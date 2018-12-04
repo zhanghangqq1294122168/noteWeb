@@ -1,7 +1,7 @@
 var navList = [
     {
         name: '/Article',
-        navItem: '技术专栏'
+        navItem: '笔记'
     },
     {
         name: '/Book',

@@ -39,7 +39,7 @@ module.exports = {
         // 配置多个代理
         proxy: {
             "/note": {
-                target: "http://localhost:8081/note",
+                target: "http://localhost:8762/note",
                 changeOrigin: true,
                 pathRewrite: {
                     "^/note": ""
