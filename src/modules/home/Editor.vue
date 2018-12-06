@@ -41,7 +41,7 @@ export default {
             const formData = new FormData();
             formData.append('file', $file);
             imgPost(formData).then((url)=>{
-              this.$refs.md.$img2Url(pos, url);
+                  this.$message.success(url);
             })
         }
     }
