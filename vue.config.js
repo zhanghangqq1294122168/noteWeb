@@ -38,11 +38,11 @@ module.exports = {
         // devtool: "source-map",
         // 配置多个代理
         proxy: {
-            "/note": {
-                target: "http://localhost:8762/note",
+            "/core-service": {
+                target: "http://localhost:8888/core-service",
                 changeOrigin: true,
                 pathRewrite: {
-                    "^/note": ""
+                    "^/core-service": ""
                 }
             }
         }

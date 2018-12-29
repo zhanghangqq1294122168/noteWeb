@@ -9,9 +9,8 @@
 
     export default {
         name: 'app',
-        components: {
-            Index
-        }
+        components: {Index},
+        created: function () {}
     }
 </script>
 

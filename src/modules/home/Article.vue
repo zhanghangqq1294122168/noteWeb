@@ -1,101 +1,57 @@
 <template>
-  <div class="article">
-    <el-aside width="200px">
-      <el-input placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
-      <el-tree
-        class="filter-tree"
-        :data="data2"
-        :props="defaultProps"
-        accordion
-        default-expand-all
-        :filter-node-method="filterNode"
-        :icon-class="el-icon-star-on"
-        ref="tree2"
-      ></el-tree>
-    </el-aside>
-    <i class="el-icon-star-on"></i>
-  </div>
+    <div class="article">
+        <el-aside width="200px">
+            <el-input placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
+            <el-tree
+                    class="filter-tree"
+                    :data="treeList"
+                    :filter-node-method="filterNode"
+                    v-model="filterText"
+                    ref="foderTree"
+                    @node-drop="handleDrop"
+            ></el-tree>
+        </el-aside>
+    </div>
 </template>
 
 <script>
-// import folder from '../../assets/folder.svg'
+    import {folderTreeList} from "../../api/article.js";
 
-export default {
-  name: "article",
-  watch: {
-    filterText(val) {
-      this.$refs.tree2.filter(val);
-    }
-  },
-
-  methods: {
-    filterNode(value, data) {
-      if (!value) return true;
-      return data.label.indexOf(value) !== -1;
-    }
-  },
-
-  data() {
-    return {
-      filterText: "",
-      data2: [
-        {
-          id: 1,
-          label: "一级 1",
-          children: [
-            {
-              id: 4,
-              label: "二级 1-1",
-              children: [
-                {
-                  id: 9,
-                  label: "三级 1-1-1"
-                },
-                {
-                  id: 10,
-                  label: "三级 1-1-2"
-                }
-              ]
+    export default {
+        watch: {
+            filterText(val) {
+                this.$refs.foderTree.filter(val);
             }
-          ]
         },
-        {
-          id: 2,
-          label: "一级 2",
-          children: [
-            {
-              id: 5,
-              label: "二级 2-1"
+        methods: {
+            InitFolderTree() {
+                folderTreeList().then(res => {
+                    if (res.data.status === 200) {
+                        this.treeList = res.data.data || [];
+                    } else {
+                        this.$message.error('树查询出错');
+                    }
+                })
             },
-            {
-              id: 6,
-              label: "二级 2-2"
+            filterNode(value, data) {
+                if (!value) return true;
+                return data.label.indexOf(value) !== -1;
             }
-          ]
         },
-        {
-          id: 3,
-          label: "一级 3",
-          children: [
-            {
-              id: 7,
-              label: "二级 3-1"
-            },
-            {
-              id: 8,
-              label: "二级 3-2"
-            }
-          ]
+        created() {
+            this.InitFolderTree();
+        },
+        data() {
+            return {
+                filterText: '',
+                treeList: [],
+                // defaultProps: {
+                //     children: "children",
+                //     label: "label"
+                // }
+            };
         }
-      ]
-    //   ,
-    //   defaultProps: {
-    //     children: "children",
-    //     label: "label"
-    //   }
     };
-  }
-};
 </script>
 
 <style scoped>
